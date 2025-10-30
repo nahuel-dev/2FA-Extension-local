@@ -97,13 +97,22 @@ This extension is compatible with any service that uses TOTP (Time-based One-Tim
 ```
 2FA-Extension-local/
 ├── manifest.json       # Extension configuration
-├── popup.html         # Main interface
-├── popup.css          # Styles
-├── popup.js           # Interface logic
-├── totp.js            # TOTP code generator
-├── background.js      # Service worker
-├── icons/             # Extension icons
-└── README.md          # This file
+├── popup.html          # Main popup interface
+├── popup.css           # Popup styles
+├── popup.js            # Popup logic and account management
+├── settings.html       # Settings page interface
+├── settings.css        # Settings page styles
+├── settings.js         # Settings configuration logic
+├── content.js          # Content script for floating window injection
+├── content.css         # Floating window styles
+├── totp.js             # TOTP code generator (HMAC-SHA1)
+├── security.js         # PIN encryption and authentication
+├── security-test.js    # Security testing utilities
+├── decoy.js            # Decoy mode implementation
+├── i18n.js             # Internationalization support
+├── icons/              # Extension icons
+├── images/             # Screenshots and documentation images
+└── README.md           # This file
 ```
 
 ### Technologies Used
