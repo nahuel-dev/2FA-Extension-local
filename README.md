@@ -2,17 +2,8 @@
 
 I was a long-time user of KeePassXC and Protonpass, but based on my experience as a user, I wanted something a little more flexible, easier to use, secure, and with local privacy features that didn't rely on any servers. That's why I decided to create a simple extension adapted to the Chromium and Firefox browsers to easily manage OTP codes. You can configure the privacy level by adding a PIN to unlock the extension. This PIN is stored in the cache in encrypted form with a final salt based on SHA-256 with the PBKDF2 algorithm. There are other higher levels of privacy, such as camouflaging the extension as if it were an extension for downloading videos from x.com (Twitter), adding a limit on failed attempts and configuring a response to this, such as resetting the extension and adding 30 random and realistic OTP accounts as a counterintelligence method. This is a security method to prevent brute force attempts and other attacks from a potential attacker.
 
-## 📸 Screenshots
-
-<div align="center">
-
-### Add 2FA Account
 ![Add 2FA Account](images/Captura%20de%20pantalla%202025-10-30%20131546.png)
-
-### Floating Window with TOTP Code
 ![Floating Window](images/Captura%20de%20pantalla%202025-10-30%20132758.png)
-
-</div>
 
 ## 🔐 Características
 
