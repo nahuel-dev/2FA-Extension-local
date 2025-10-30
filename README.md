@@ -82,6 +82,8 @@ This extension is compatible with any service that uses TOTP (Time-based One-Tim
 
 ## Security
 
+![Security](images/security.png)
+
 - **Local Storage**: Secrets are stored only in your browser
 - **No Internet Connection**: The extension works completely offline
 - **Open Source**: You can review all the source code

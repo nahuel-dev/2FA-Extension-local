@@ -357,11 +357,11 @@ class SettingsManager {
         
         window.securityManager.isPinConfigured().then(isPinConfigured => {
             if (isPinConfigured) {
-                title.textContent = 'Cambiar PIN';
+                title.textContent = window.i18n.translate('changePin');
                 currentPinGroup.style.display = 'block';
                 document.getElementById('currentPin').required = true;
             } else {
-                title.textContent = 'Configurar PIN';
+                title.textContent = window.i18n.translate('setupPinBtn');
                 currentPinGroup.style.display = 'none';
                 document.getElementById('currentPin').required = false;
             }
