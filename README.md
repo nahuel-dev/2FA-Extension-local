@@ -7,15 +7,6 @@ There are other higher levels of privacy, such as camouflaging the extension as 
 ![Add 2FA Account](images/Captura%20de%20pantalla%202025-10-30%20131546.png)
 ![Floating Window](images/Captura%20de%20pantalla%202025-10-30%20132758.png)
 
-## Features
-
-- **TOTP Code Generation**: Compatible with Google Authenticator, Authy, and others
-- **Modern Interface**: Clean and easy-to-use design
-- **Secure Storage**: Secrets are stored locally in your browser
-- **Copy to Clipboard**: One-click code copying
-- **Visual Timer**: Indicator showing remaining time for each code
-- **Multiple Accounts**: Manage all your 2FA accounts in one place
-
 ## Local installation based on the source code on GitHub: 
 
 ### Chromium Browsers (Chrome, Edge, Brave)
@@ -133,30 +124,3 @@ mividaextension/
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
-## Reporting Issues
-
-If you encounter any problems or have suggestions:
-
-1. **Open an issue** on GitHub
-2. **Describe the problem** in detail
-3. **Include steps** to reproduce the error
-4. **Mention your browser** and version
-
-## Support
-
-- **GitHub Issues**: For reporting bugs and requesting features
-- **Email**: [your-email@example.com]
-
-## Roadmap
-
-- [ ] QR code import
-- [ ] Account export/import
-- [ ] Dark theme
-- [ ] Account search
-- [ ] Categories/tags
-- [ ] Automatic backup
-
----
-
-**Important**: Always keep a backup of your secret keys in a safe place. This extension stores data locally, so if you uninstall the extension or clear browser data, you will lose all configured accounts.
