@@ -2,6 +2,86 @@
 
 Una extensión segura y fácil de usar para administrar códigos 2FA/TOTP en navegadores Chromium (Chrome, Edge, Brave, etc.).
 
+## 📸 Capturas de pantalla
+
+<div align="center">
+
+<!-- Carrusel de imágenes -->
+<div style="position: relative; max-width: 800px; margin: 0 auto;">
+  <div id="carousel" style="position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+    <img src="images/Captura de pantalla 2025-10-30 130048.png" alt="Configuración de seguridad" style="width: 100%; display: block;" id="carousel-img">
+  </div>
+  
+  <!-- Controles de navegación -->
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="changeSlide(-1)" style="background: #333; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 18px;">❮</button>
+    <span style="display: inline-block; margin: 0 15px;">
+      <span onclick="currentSlide(1)" style="cursor: pointer; height: 12px; width: 12px; margin: 0 5px; background-color: #333; border-radius: 50%; display: inline-block;" id="dot1"></span>
+      <span onclick="currentSlide(2)" style="cursor: pointer; height: 12px; width: 12px; margin: 0 5px; background-color: #bbb; border-radius: 50%; display: inline-block;" id="dot2"></span>
+      <span onclick="currentSlide(3)" style="cursor: pointer; height: 12px; width: 12px; margin: 0 5px; background-color: #bbb; border-radius: 50%; display: inline-block;" id="dot3"></span>
+    </span>
+    <button onclick="changeSlide(1)" style="background: #333; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 18px;">❯</button>
+  </div>
+  
+  <!-- Descripción de la imagen actual -->
+  <p style="text-align: center; margin-top: 15px; font-style: italic; color: #666;" id="carousel-caption">
+    Configuración de seguridad con PIN y opciones de bloqueo automático
+  </p>
+</div>
+
+<script>
+let slideIndex = 1;
+const images = [
+  {
+    src: "images/Captura de pantalla 2025-10-30 130048.png",
+    caption: "Configuración de seguridad con PIN y opciones de bloqueo automático"
+  },
+  {
+    src: "images/Captura de pantalla 2025-10-30 131546.png",
+    caption: "Agregar nueva cuenta 2FA con nombre, dominio y clave secreta"
+  },
+  {
+    src: "images/Captura de pantalla 2025-10-30 132758.png",
+    caption: "Ventana flotante mostrando código TOTP en GitHub"
+  }
+];
+
+function changeSlide(n) {
+  showSlide(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlide(slideIndex = n);
+}
+
+function showSlide(n) {
+  if (n > images.length) { slideIndex = 1 }
+  if (n < 1) { slideIndex = images.length }
+  
+  // Actualizar imagen
+  document.getElementById('carousel-img').src = images[slideIndex - 1].src;
+  document.getElementById('carousel-img').alt = images[slideIndex - 1].caption;
+  
+  // Actualizar caption
+  document.getElementById('carousel-caption').textContent = images[slideIndex - 1].caption;
+  
+  // Actualizar dots
+  for (let i = 1; i <= images.length; i++) {
+    const dot = document.getElementById('dot' + i);
+    if (dot) {
+      dot.style.backgroundColor = (i === slideIndex) ? '#333' : '#bbb';
+    }
+  }
+}
+
+// Auto-play (opcional)
+setInterval(() => {
+  changeSlide(1);
+}, 5000);
+</script>
+
+</div>
+
 ## 🔐 Características
 
 - **Generación de códigos TOTP**: Compatible con Google Authenticator, Authy y otros
@@ -78,6 +158,9 @@ Esta extensión es compatible con cualquier servicio que use TOTP (Time-based On
 - **Sin conexión a internet**: La extensión funciona completamente offline
 - **Código abierto**: Puedes revisar todo el código fuente
 - **Sin telemetría**: No se envían datos a servidores externos
+- **Protección con PIN**: Bloquea la extensión con un PIN de seguridad
+- **Auto-lock**: Bloqueo automático después de inactividad
+- **Modo Decoy**: Protección contra intentos de acceso no autorizados
 
 ## 🛠️ Desarrollo
 
