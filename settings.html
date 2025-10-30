@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>settings [configuracion] - 2FA</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <script src="i18n.js"></script>
+    <script src="decoy.js"></script>
+    <div id="settingsLockScreen" class="settings-lock-screen" style="display: none;">
+        <div class="lock-content">
+            <div class="lock-icon" id="settingsLockIcon">🔒</div>
+            <h2 id="settingsLockTitle" data-i18n="configurationLocked">Configuración Bloqueada</h2>
+            <p id="settingsLockDescription" data-i18n="enterPinToAccessConfig">Ingresa tu PIN para acceder a la configuración</p>
+            <form id="settingsUnlockForm" class="unlock-form">
+                <input type="password" id="settingsPinInput" data-i18n-placeholder="enterPin" placeholder="Ingresa tu PIN" maxlength="6" autocomplete="off">
+                <button type="submit" class="btn-unlock" id="settingsUnlockBtn" data-i18n="unlock">Desbloquear</button>
+            </form>
+            <div id="settingsPinError" class="pin-error" style="display: none;" data-i18n="incorrectPin">PIN incorrecto</div>
+        </div>
+    </div>
+
+    <div class="settings-container" id="settingsMainContent">
+        <header class="settings-header">
+            <h1 data-i18n="configuration">⚙️ Configuración</h1>
+            <button id="backBtn" class="back-btn" data-i18n="back">← Volver</button>
+        </header>
+
+        <div class="settings-content">
+            <section class="settings-section">
+                <h2 data-i18n="pinSecurityConfig">Seguridad de PIN y Configuración de Bloqueo</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="pinStatus">Estado del PIN:</label>
+                        <span id="pinStatus" class="pin-status">Cargando...</span>
+                    </div>
+                    <div class="setting-actions">
+                        <button id="changePinBtn" class="btn-secondary" data-i18n="setupPinBtn">Configurar PIN</button>
+                        <button id="removePinBtn" class="btn-danger" style="display: none;" data-i18n="removePin">Eliminar PIN</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="autoLockSelect" data-i18n="autoLockAfter">Bloquear automáticamente después de:</label>
+                        <select id="autoLockSelect" class="setting-select">
+                            <option value="0" data-i18n="never">Nunca</option>
+                            <option value="60" data-i18n="oneMinute">1 minuto</option>
+                            <option value="300" data-i18n="fiveMinutes">5 minutos</option>
+                            <option value="900" data-i18n="fifteenMinutes">15 minutos</option>
+                            <option value="1800" data-i18n="thirtyMinutes">30 minutos</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="resetOnFailedAttempts">Restablecer extensión por intentos fallidos:</label>
+                        <p class="setting-description" id="resetAttemptsDescription" data-i18n="resetOnFailedAttemptsDesc">Elimina todas las cuentas y configuraciones después de un número específico de intentos fallidos de PIN.</p>
+                    </div>
+                    <div class="setting-actions">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="resetOnFailedAttemptsToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="decoyModeOnFailedAttempts">Modo señuelo por intentos fallidos:</label>
+                        <p class="setting-description" data-i18n="decoyModeOnFailedAttemptsDesc">Genera cuentas OTP falsas realistas y elimina las originales después de intentos fallidos. Medida de autodestrucción para proteger datos reales.</p>
+                    </div>
+                    <div class="setting-actions">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="decoyModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="setting-item" id="decoyBehaviorSetting" style="display: none; margin-left: 20px;">
+                    <div class="setting-info">
+                        <label data-i18n="decoyBehaviorAfterActivation">Comportamiento después de activar señuelo:</label>
+                        <select id="decoyBehaviorSelect" class="setting-select">
+                            <option value="locked" data-i18n="decoyBehaviorLocked">Permanecer bloqueada</option>
+                            <option value="unlocked" data-i18n="decoyBehaviorUnlocked">Desbloquear automáticamente (ingeniería social)</option>
+                        </select>
+                        <p class="setting-description" data-i18n="decoyBehaviorDesc">Si se desbloquea automáticamente, el atacante verá códigos falsos y perderá tiempo analizándolos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2 data-i18n="language">Idioma</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="extensionLanguage">Idioma de la extensión:</label>
+                        <p class="setting-description" data-i18n="selectLanguage">Selecciona el idioma de la interfaz</p>
+                    </div>
+                    <div class="setting-actions">
+                        <select id="languageSelect" class="setting-select">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2 data-i18n="disguiseMode">Modo Camuflaje</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="activateDisguiseMode">Activar modo camuflaje:</label>
+                        <p class="setting-description" data-i18n="disguiseModeDesc">Disfraza la extensión como un descargador de videos de X.com. Requiere PIN para acceder a la extensión real.</p>
+                    </div>
+                    <div class="setting-actions">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="disguiseModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2 data-i18n="backupRestore">Respaldo y Restauración</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="exportConfig">Exportar configuración:</label>
+                        <p class="setting-description" data-i18n="exportConfigDesc">Descarga todas tus cuentas OTP y configuraciones en un archivo seguro.</p>
+                    </div>
+                    <div class="setting-actions">
+                        <button id="exportBtn" class="btn-primary" data-i18n="exportAll">Exportar Todo</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="importConfig">Importar configuración:</label>
+                        <p class="setting-description" data-i18n="importConfigDesc">Restaura tus cuentas OTP desde un archivo de respaldo.</p>
+                    </div>
+                    <div class="setting-actions">
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                        <button id="importBtn" class="btn-secondary" data-i18n="importFile">Importar Archivo</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>Información</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <p><strong>Versión:</strong> 1.0.0</p>
+                        <p><strong>Desarrollado por:</strong> Administrador de códigos OTP Team</p>
+                        <p><strong>Descripción:</strong> Administrador seguro de códigos 2FA/TOTP</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section danger-zone">
+                <h2 data-i18n="dangerZone">Zona de Peligro</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label data-i18n="resetExtension">Restablecer extensión:</label>
+                        <p class="setting-description" data-i18n="resetExtensionDesc">Esto eliminará todas las cuentas y configuraciones.</p>
+                    </div>
+                    <div class="setting-actions">
+                        <button id="resetExtensionBtn" class="btn-danger" data-i18n="resetAll">Restablecer Todo</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="changePinModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="changePinTitle" data-i18n="changePin">Configurar PIN</h2>
+                <button id="closeChangePinModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changePinForm">
+                    <div class="form-group">
+                        <label for="currentPin" data-i18n="currentPin">PIN actual (si existe):</label>
+                        <input type="password" id="currentPin" maxlength="6" data-i18n-placeholder="currentPinPlaceholder" placeholder="Dejar vacío si no hay PIN">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPin" data-i18n="newPin">Nuevo PIN:</label>
+                        <input type="password" id="newPin" maxlength="6" data-i18n-placeholder="newPinPlaceholder" placeholder="4-6 dígitos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmNewPin" data-i18n="confirmPin">Confirmar nuevo PIN:</label>
+                        <input type="password" id="confirmNewPin" maxlength="6" data-i18n-placeholder="confirmPinPlaceholder" placeholder="Repetir PIN" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelChangePinBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                        <button type="submit" class="btn-primary" data-i18n="savePinBtn">Guardar PIN</button>
+                    </div>
+                </form>
+                <div id="changePinError" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="removePinModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="removePin">Eliminar PIN</h2>
+                <button id="closeRemovePinModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="removePinForm">
+                    <p class="warning-text" data-i18n="removePinWarning">⚠️ Estás a punto de eliminar el PIN de seguridad. Tus cuentas OTP se mantendrán guardadas.</p>
+                    <div class="form-group">
+                        <label for="removePinCurrent" data-i18n="enterCurrentPinConfirm">Ingresa tu PIN actual para confirmar:</label>
+                        <input type="password" id="removePinCurrent" maxlength="6" data-i18n-placeholder="currentPinPlaceholder2" placeholder="PIN actual" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelRemovePinBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                        <button type="submit" class="btn-danger" data-i18n="removePin">Eliminar PIN</button>
+                    </div>
+                </form>
+                <div id="removePinError" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="exportPinModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="verifyIdentity">Verificar identidad</h2>
+                <button id="closeExportPinModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="exportPinForm">
+                    <p data-i18n="enterPinToExport">Ingresa tu PIN para exportar la configuración:</p>
+                    <div class="form-group">
+                        <label for="exportPinInput" data-i18n="currentPin">PIN:</label>
+                        <input type="password" id="exportPinInput" maxlength="6" data-i18n-placeholder="currentPinPlaceholder2" placeholder="PIN actual" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelExportPinBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                        <button type="submit" class="btn-primary" data-i18n="continue">Continuar</button>
+                    </div>
+                </form>
+                <div id="exportPinError" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="successTitle" data-i18n="success">✓ Éxito</h2>
+                <button id="closeSuccessModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="successMessage">Operación completada exitosamente.</p>
+                <div class="form-actions">
+                    <button type="button" id="acceptSuccessBtn" class="btn-primary" data-i18n="accept">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="attemptsConfigModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n="configureFailedAttempts">Configurar intentos fallidos</h2>
+                <button id="closeAttemptsConfigModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="attemptsConfigForm">
+                    <p data-i18n="howManyAttempts">¿Después de cuántos intentos fallidos deseas restablecer la extensión?</p>
+                    <div class="form-group">
+                        <label for="maxAttemptsInput" data-i18n="numberOfAttempts">Número de intentos (mínimo 1):</label>
+                        <div class="number-input-wrapper">
+                            <button type="button" class="number-btn" id="decreaseAttempts">−</button>
+                            <input type="number" id="maxAttemptsInput" min="1" value="5" required>
+                            <button type="button" class="number-btn" id="increaseAttempts">+</button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelAttemptsConfigBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                        <button type="submit" class="btn-primary" data-i18n="save">Guardar</button>
+                    </div>
+                </form>
+                <div id="attemptsConfigError" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="security.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>

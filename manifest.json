@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Manager de codigos OTP de 2FA",
+  "version": "1.0.0",
+  "description": "Administrador 2FA orientado a la privacidad de codigos OTP para configuracion en 2 pasos",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "otp-manager@mivida2fa.com",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": [
+    "storage",
+    "clipboardWrite",
+    "tabs",
+    "activeTab"
+  ],
+  "icons": {
+    "16": "icons/icono.png",
+    "32": "icons/icono.png",
+    "48": "icons/icono.png",
+    "128": "icons/icono.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Manager de codigos OTP de 2FA",
+    "default_icon": {
+      "16": "icons/icono.png",
+      "32": "icons/icono.png",
+      "48": "icons/icono.png",
+      "128": "icons/icono.png"
+    }
+  }
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de códigos OTP</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <script src="i18n.js"></script>
+    <script src="decoy.js"></script>
+    <div class="container">
+        <div id="lockScreen" class="lock-screen" style="display: none;">
+            <div class="lock-content">
+                <div class="lock-icon" id="lockIcon">🔒</div>
+                <h2 id="lockTitle">Extensión Bloqueada</h2>
+                <p id="lockDescription">Ingresa tu PIN para acceder a tus códigos 2FA</p>
+                <form id="unlockForm" class="unlock-form">
+                    <input type="password" id="pinInput" placeholder="Ingresa tu PIN" maxlength="6" autocomplete="off">
+                    <button type="submit" class="btn-unlock" id="unlockBtn">Desbloquear</button>
+                </form>
+                <div id="pinError" class="pin-error" style="display: none;" data-i18n="incorrectPin">PIN incorrecto</div>
+                <button id="resetPinBtn" class="btn-reset" data-i18n="forgotPin">¿Olvidaste tu PIN?</button>
+            </div>
+        </div>
+
+        <div id="setupScreen" class="setup-screen" style="display: none;">
+            <div class="setup-content">
+                <div class="setup-icon">🛡️</div>
+                <h2 data-i18n="setupSecurity">Configurar Seguridad</h2>
+                <p data-i18n="setupPinDesc">Establece un PIN de 4-6 dígitos para proteger tu extensión</p>
+                <form id="setupForm" class="setup-form">
+                    <input type="password" id="newPinInput" data-i18n-placeholder="newPin" placeholder="Nuevo PIN (4-6 dígitos)" maxlength="6" autocomplete="off">
+                    <input type="password" id="confirmPinInput" data-i18n-placeholder="confirmPin" placeholder="Confirmar PIN" maxlength="6" autocomplete="off">
+                    <button type="submit" class="btn-setup" data-i18n="setupPin">Configurar PIN</button>
+                </form>
+                <button id="skipSetupBtn" class="btn-skip" data-i18n="skipForNow">Omitir por ahora</button>
+                <div id="setupError" class="setup-error" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div id="confirmDeletePinModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 data-i18n="confirmDeletePin">Confirmar eliminación de PIN</h2>
+                </div>
+                <div class="modal-body">
+                    <p data-i18n="confirmDeletePinMessage">¿Estás seguro de que quieres eliminar el PIN? Esto también eliminará todas las cuentas guardadas por seguridad.</p>
+                    <div class="modal-actions">
+                        <button id="cancelDeletePinBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                        <button id="confirmDeletePinBtn" class="btn-danger" data-i18n="deletePin">Eliminar PIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mainScreen" class="main-screen">
+            <header class="header">
+                <h1 data-i18n="appTitle">Administrador de códigos OTP</h1>
+                <div class="header-actions">
+                    <button id="settingsBtn" class="btn-settings" data-i18n="settingsButton">⚙️</button>
+                    <button id="addAccountBtn" class="btn-primary" data-i18n="addButton">+ Agregar</button>
+                </div>
+            </header>
+
+            <div class="main-content">
+                <div class="accounts-section">
+                    <div id="accountsList" class="accounts-list">
+                    </div>
+
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <div class="empty-icon">🔑</div>
+                        <h3 data-i18n="noAccounts">No hay cuentas configuradas</h3>
+                        <p data-i18n="noAccountsDesc">Agrega tu primera cuenta 2FA para comenzar</p>
+                        <button id="addFirstAccountBtn" class="btn-primary" data-i18n="addFirstAccount">Agregar cuenta</button>
+                    </div>
+                </div>
+
+                <div id="detailsPanel" class="details-panel">
+                    <div class="details-header">
+                        <h3 data-i18n="accountDetails">Detalles de la cuenta</h3>
+                        <p data-i18n="selectAccount">Selecciona una cuenta para ver sus detalles</p>
+                    </div>
+                    
+                    <div id="accountDetailsContent" class="account-details-content" style="display: none;">
+                        <div class="detail-section">
+                            <label class="detail-label" data-i18n="name">Nombre</label>
+                            <div class="detail-field">
+                                <div class="detail-value editable clickable" id="detailName">-</div>
+                                <input type="text" class="detail-input" id="detailNameInput" style="display: none;">
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <label class="detail-label" data-i18n="issuer">Dominio</label>
+                            <div class="detail-field">
+                                <div class="detail-value editable clickable" id="detailDomain">-</div>
+                                <input type="text" class="detail-input" id="detailDomainInput" style="display: none;">
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <label class="detail-label" data-i18n="urlAddress">Dirección de URL</label>
+                            <div class="detail-field">
+                                <div class="detail-value editable clickable" id="detailUrl">-</div>
+                                <input type="text" class="detail-input" id="detailUrlInput" style="display: none;" placeholder="https://accounts.google.com/v3/signin/identifier">
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <label class="detail-label" data-i18n="floatingWindow">Ventana flotante</label>
+                            <div class="detail-field">
+                                <select class="detail-select" id="detailFloatingWindow">
+                                    <option value="always" data-i18n="alwaysActive">Siempre activado</option>
+                                    <option value="disabled" data-i18n="disabled">Desactivado</option>
+                                    <option value="10" data-i18n="tenMinutes">10 minutos</option>
+                                    <option value="30" data-i18n="thirtyMinutes">30 minutos</option>
+                                    <option value="300" data-i18n="fiveHours">5 horas</option>
+                                    <option value="1440" data-i18n="oneDay">1 día</option>
+                                    <option value="10080" data-i18n="oneWeek">1 semana</option>
+                                    <option value="43200" data-i18n="oneMonth">1 mes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <label class="detail-label" data-i18n="secret">Secret (Hash original)</label>
+                            <div class="detail-value secret-value" id="detailSecret">-</div>
+                        </div>
+
+                        <div class="detail-section">
+                            <label class="detail-label" data-i18n="otpDescription">Descripción del OTP</label>
+                            <div class="detail-field">
+                                <div class="detail-value editable clickable" id="detailDescription" data-i18n="noDescription">Sin descripción</div>
+                                <textarea class="detail-textarea" id="detailDescriptionInput" style="display: none;" data-i18n-placeholder="descriptionPlaceholder" placeholder="Ej: Este OTP es para mi cuenta secundaria..." rows="3"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        <div id="addAccountModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 data-i18n="addAccount">Agregar cuenta 2FA</h2>
+                    <button id="closeModal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAccountForm">
+                        <div class="form-group">
+                            <label for="accountName" data-i18n="accountName">Nombre de la cuenta:</label>
+                            <input type="text" id="accountName" data-i18n-placeholder="accountNamePlaceholder" placeholder="Ej: Google, GitHub, etc." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="domainName" data-i18n="domainOptional">Dominio (opcional):</label>
+                            <input type="text" id="domainName" data-i18n-placeholder="domainPlaceholder" placeholder="Ej: binance.com, google.com">
+                            <small data-i18n="domainHelp">Dominio donde se usará este código para auto-detección</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="urlName" data-i18n="urlAddressOptional">Dirección de URL (opcional):</label>
+                            <input type="text" id="urlName" data-i18n-placeholder="urlPlaceholder" placeholder="Ej: accounts.google.com/v3/signin/identifier">
+                            <small data-i18n="urlHelp">URL específica donde se usará este código para auto-detección</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="secretKey" data-i18n="secretKey">Clave secreta:</label>
+                            <input type="text" id="secretKey" data-i18n-placeholder="secretKeyPlaceholder" placeholder="Ingresa la clave secreta" required>
+                            <small data-i18n="secretKeyHelp">Puedes encontrar esta clave en el código QR o en la configuración 2FA</small>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="cancelBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                            <button type="submit" class="btn-primary" data-i18n="addButton">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="deleteModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 data-i18n="deleteAccount">Confirmar eliminación</h2>
+                    <button id="closeDeleteModal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p data-i18n="deleteConfirm">¿Estás seguro de que quieres eliminar esta cuenta?</p>
+                    <div class="form-actions">
+                        <button type="button" id="cancelDeleteBtn" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+                        <button type="button" id="confirmDeleteBtn" class="btn-danger" data-i18n="delete">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="totp.js"></script>
+    <script src="security.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
