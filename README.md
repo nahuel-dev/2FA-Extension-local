@@ -1,6 +1,8 @@
 # 2FA Manager Local Extension
 
-I was a long-time user of KeePassXC and Protonpass, but based on my experience as a user, I wanted something a little more flexible, easier to use, secure, and with local privacy features that didn't rely on any servers. That's why I decided to create a simple extension adapted to the Chromium and Firefox browsers to easily manage OTP codes. You can configure the privacy level by adding a PIN to unlock the extension. This PIN is stored in the cache in encrypted form with a final salt based on SHA-256 with the PBKDF2 algorithm. There are other higher levels of privacy, such as camouflaging the extension as if it were an extension for downloading videos from x.com (Twitter), adding a limit on failed attempts and configuring a response to this, such as resetting the extension and adding 30 random and realistic OTP accounts as a counterintelligence method. This is a security method to prevent brute force attempts and other attacks from a potential attacker.
+I was a long-time user of KeePassXC and Protonpass, but based on my experience as a user, I wanted something a little more flexible, easier to use, secure, and with local privacy features that didn't rely on any servers. That's why I decided to create a simple extension adapted to the Chromium and Firefox browsers to easily manage OTP codes. You can configure the privacy level by adding a PIN to unlock the extension. This PIN is stored in the cache in encrypted form with a final salt based on SHA-256 with the PBKDF2 algorithm. 
+
+There are other higher levels of privacy, such as camouflaging the extension as if it were an extension for downloading videos from x.com (Twitter), adding a limit on failed attempts and configuring a response to this, such as resetting the extension and adding 30 random and realistic OTP accounts as a counterintelligence method. This is a security method to prevent brute force attempts and other attacks from a potential attacker.
 
 ![Add 2FA Account](images/Captura%20de%20pantalla%202025-10-30%20131546.png)
 ![Floating Window](images/Captura%20de%20pantalla%202025-10-30%20132758.png)
@@ -14,20 +16,32 @@ I was a long-time user of KeePassXC and Protonpass, but based on my experience a
 - **Visual Timer**: Indicator showing remaining time for each code
 - **Multiple Accounts**: Manage all your 2FA accounts in one place
 
-## Installation
+## Local installation based on the source code on GitHub: 
 
-### Option 1: Manual Installation (Development)
+### Chromium Browsers (Chrome, Edge, Brave)
 
-1. **Download or clone** this repository
-2. **Open Chrome** and navigate to `chrome://extensions/`
-3. **Enable developer mode** (toggle in the top right corner)
-4. **Click "Load unpacked"**
-5. **Select the folder** containing the extension files
-6. **Done!** The extension will appear in your toolbar
+1. Download or clone this repository
+2. Open your browser and navigate to `chrome://extensions/` (or `edge://extensions/` for Edge)
+3. Enable developer mode using the toggle in the top right corner
+4. Click "Load unpacked" button
+5. Select the folder containing the extension files
+6. The extension will appear in your toolbar
 
-### Option 2: Chrome Web Store (Coming Soon)
+### Firefox
 
-The extension will be available on the Chrome Web Store soon.
+1. Download or clone this repository
+2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`
+3. Click "Load Temporary Add-on"
+4. Navigate to the extension folder and select the `manifest.json` file
+5. The extension will be loaded temporarily (note: it will be removed when Firefox restarts)
+
+**For permanent installation in Firefox:**
+1. Package the extension as a `.xpi` file or submit it to Firefox Add-ons
+2. Alternatively, use Firefox Developer Edition or Nightly for persistent temporary extensions
+
+### Chrome Web Store / Firefox Add-ons (Coming Soon)
+
+The extension will be available on official stores soon.
 
 ## Usage
 
