@@ -1,148 +1,148 @@
-# 2FA Manager local extension
+# 2FA Manager Local Extension
 
 I was a long-time user of KeePassXC and Protonpass, but based on my experience as a user, I wanted something a little more flexible, easier to use, secure, and with local privacy features that didn't rely on any servers. That's why I decided to create a simple extension adapted to the Chromium and Firefox browsers to easily manage OTP codes. You can configure the privacy level by adding a PIN to unlock the extension. This PIN is stored in the cache in encrypted form with a final salt based on SHA-256 with the PBKDF2 algorithm. There are other higher levels of privacy, such as camouflaging the extension as if it were an extension for downloading videos from x.com (Twitter), adding a limit on failed attempts and configuring a response to this, such as resetting the extension and adding 30 random and realistic OTP accounts as a counterintelligence method. This is a security method to prevent brute force attempts and other attacks from a potential attacker.
 
 ![Add 2FA Account](images/Captura%20de%20pantalla%202025-10-30%20131546.png)
 ![Floating Window](images/Captura%20de%20pantalla%202025-10-30%20132758.png)
 
-## 🔐 Características
+## Features
 
-- **Generación de códigos TOTP**: Compatible con Google Authenticator, Authy y otros
-- **Interfaz moderna**: Diseño limpio y fácil de usar
-- **Almacenamiento seguro**: Los secretos se guardan localmente en tu navegador
-- **Copiar al portapapeles**: Un clic para copiar códigos
-- **Timer visual**: Indicador del tiempo restante para cada código
-- **Múltiples cuentas**: Administra todas tus cuentas 2FA en un solo lugar
+- **TOTP Code Generation**: Compatible with Google Authenticator, Authy, and others
+- **Modern Interface**: Clean and easy-to-use design
+- **Secure Storage**: Secrets are stored locally in your browser
+- **Copy to Clipboard**: One-click code copying
+- **Visual Timer**: Indicator showing remaining time for each code
+- **Multiple Accounts**: Manage all your 2FA accounts in one place
 
-## 📦 Instalación
+## Installation
 
-### Opción 1: Instalación manual (Desarrollo)
+### Option 1: Manual Installation (Development)
 
-1. **Descargar o clonar** este repositorio
-2. **Abrir Chrome** y navegar a `chrome://extensions/`
-3. **Activar el modo desarrollador** (toggle en la esquina superior derecha)
-4. **Hacer clic en "Cargar extensión sin empaquetar"**
-5. **Seleccionar la carpeta** que contiene los archivos de la extensión
-6. **¡Listo!** La extensión aparecerá en tu barra de herramientas
+1. **Download or clone** this repository
+2. **Open Chrome** and navigate to `chrome://extensions/`
+3. **Enable developer mode** (toggle in the top right corner)
+4. **Click "Load unpacked"**
+5. **Select the folder** containing the extension files
+6. **Done!** The extension will appear in your toolbar
 
-### Opción 2: Chrome Web Store (Próximamente)
+### Option 2: Chrome Web Store (Coming Soon)
 
-La extensión estará disponible en Chrome Web Store próximamente.
+The extension will be available on the Chrome Web Store soon.
 
-## 🚀 Uso
+## Usage
 
-### Agregar una cuenta 2FA
+### Adding a 2FA Account
 
-1. **Hacer clic** en el icono de la extensión
-2. **Hacer clic en "Agregar"** o "Agregar cuenta"
-3. **Ingresar el nombre** de la cuenta (ej: "Google", "GitHub")
-4. **Ingresar la clave secreta** (la cadena que aparece en el código QR)
-5. **Hacer clic en "Agregar"**
+1. **Click** on the extension icon
+2. **Click "Add"** or "Add account"
+3. **Enter the account name** (e.g., "Google", "GitHub")
+4. **Enter the secret key** (the string that appears in the QR code)
+5. **Click "Add"**
 
-### Obtener códigos
+### Getting Codes
 
-1. **Hacer clic** en el icono de la extensión
-2. **Ver los códigos** generados automáticamente
-3. **Hacer clic en "Copiar"** para copiar un código al portapapeles
-4. **Los códigos se actualizan** automáticamente cada 30 segundos
+1. **Click** on the extension icon
+2. **View** the automatically generated codes
+3. **Click "Copy"** to copy a code to the clipboard
+4. **Codes refresh** automatically every 30 seconds
 
-### Eliminar una cuenta
+### Deleting an Account
 
-1. **Hacer clic** en el botón "Eliminar" junto a la cuenta
-2. **Confirmar** la eliminación en el modal
+1. **Click** the "Delete" button next to the account
+2. **Confirm** the deletion in the modal
 
-## 🔧 Configuración
+## Configuration
 
-### Obtener la clave secreta
+### Obtaining the Secret Key
 
-Cuando configures 2FA en un servicio:
+When setting up 2FA on a service:
 
-1. **Escanea el código QR** con cualquier app 2FA para obtener la clave
-2. **O busca la opción** "No puedo escanear el código QR" o "Configuración manual"
-3. **Copia la clave secreta** (una cadena como: `JBSWY3DPEHPK3PXP`)
-4. **Úsala en la extensión**
+1. **Scan the QR code** with any 2FA app to get the key
+2. **Or look for the option** "Can't scan the QR code" or "Manual setup"
+3. **Copy the secret key** (a string like: `JBSWY3DPEHPK3PXP`)
+4. **Use it in the extension**
 
-### Servicios compatibles
+### Compatible Services
 
-Esta extensión es compatible con cualquier servicio que use TOTP (Time-based One-Time Password):
+This extension is compatible with any service that uses TOTP (Time-based One-Time Password):
 
-- ✅ Google/Gmail
-- ✅ GitHub
-- ✅ Microsoft
-- ✅ Facebook
-- ✅ Twitter/X
-- ✅ Discord
-- ✅ Dropbox
-- ✅ Y muchos más...
+- Google/Gmail
+- GitHub
+- Microsoft
+- Facebook
+- Twitter/X
+- Discord
+- Dropbox
+- And many more...
 
-## 🔒 Seguridad
+## Security
 
-- **Almacenamiento local**: Los secretos se guardan solo en tu navegador
-- **Sin conexión a internet**: La extensión funciona completamente offline
-- **Código abierto**: Puedes revisar todo el código fuente
-- **Sin telemetría**: No se envían datos a servidores externos
-- **Protección con PIN**: Bloquea la extensión con un PIN de seguridad
-- **Auto-lock**: Bloqueo automático después de inactividad
-- **Modo Decoy**: Protección contra intentos de acceso no autorizados
+- **Local Storage**: Secrets are stored only in your browser
+- **No Internet Connection**: The extension works completely offline
+- **Open Source**: You can review all the source code
+- **No Telemetry**: No data is sent to external servers
+- **PIN Protection**: Lock the extension with a security PIN
+- **Auto-lock**: Automatic locking after inactivity
+- **Decoy Mode**: Protection against unauthorized access attempts
 
-## 🛠️ Desarrollo
+## Development
 
-### Estructura del proyecto
+### Project Structure
 
 ```
 mividaextension/
-├── manifest.json       # Configuración de la extensión
-├── popup.html         # Interfaz principal
-├── popup.css          # Estilos
-├── popup.js           # Lógica de la interfaz
-├── totp.js            # Generador de códigos TOTP
+├── manifest.json       # Extension configuration
+├── popup.html         # Main interface
+├── popup.css          # Styles
+├── popup.js           # Interface logic
+├── totp.js            # TOTP code generator
 ├── background.js      # Service worker
-├── icons/             # Iconos de la extensión
-└── README.md          # Este archivo
+├── icons/             # Extension icons
+└── README.md          # This file
 ```
 
-### Tecnologías utilizadas
+### Technologies Used
 
-- **Manifest V3**: La última versión de extensiones de Chrome
-- **Vanilla JavaScript**: Sin dependencias externas
-- **CSS Grid/Flexbox**: Para layouts responsivos
-- **Web Crypto API**: Para generación segura de códigos HMAC-SHA1
+- **Manifest V3**: The latest version of Chrome extensions
+- **Vanilla JavaScript**: No external dependencies
+- **CSS Grid/Flexbox**: For responsive layouts
+- **Web Crypto API**: For secure HMAC-SHA1 code generation
 
-### Contribuir
+### Contributing
 
-1. **Fork** el repositorio
-2. **Crear una rama** para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. **Commit** tus cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. **Push** a la rama (`git push origin feature/nueva-funcionalidad`)
-5. **Crear un Pull Request**
+1. **Fork** the repository
+2. **Create a branch** for your feature (`git checkout -b feature/new-feature`)
+3. **Commit** your changes (`git commit -am 'Add new feature'`)
+4. **Push** to the branch (`git push origin feature/new-feature`)
+5. **Create a Pull Request**
 
-## 📝 Licencia
+## License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
-## 🐛 Reportar problemas
+## Reporting Issues
 
-Si encuentras algún problema o tienes sugerencias:
+If you encounter any problems or have suggestions:
 
-1. **Abrir un issue** en GitHub
-2. **Describir el problema** detalladamente
-3. **Incluir pasos** para reproducir el error
-4. **Mencionar tu navegador** y versión
+1. **Open an issue** on GitHub
+2. **Describe the problem** in detail
+3. **Include steps** to reproduce the error
+4. **Mention your browser** and version
 
-## 📞 Soporte
+## Support
 
-- **GitHub Issues**: Para reportar bugs y solicitar features
-- **Email**: [tu-email@ejemplo.com]
+- **GitHub Issues**: For reporting bugs and requesting features
+- **Email**: [your-email@example.com]
 
-## 🎯 Roadmap
+## Roadmap
 
-- [ ] Importación desde códigos QR
-- [ ] Exportación/importación de cuentas
-- [ ] Tema oscuro
-- [ ] Búsqueda de cuentas
-- [ ] Categorías/etiquetas
-- [ ] Backup automático
+- [ ] QR code import
+- [ ] Account export/import
+- [ ] Dark theme
+- [ ] Account search
+- [ ] Categories/tags
+- [ ] Automatic backup
 
 ---
 
-**⚠️ Importante**: Mantén siempre un backup de tus claves secretas en un lugar seguro. Esta extensión almacena los datos localmente, por lo que si desinstalas la extensión o limpias los datos del navegador, perderás todas las cuentas configuradas.
+**Important**: Always keep a backup of your secret keys in a safe place. This extension stores data locally, so if you uninstall the extension or clear browser data, you will lose all configured accounts.
