@@ -34,52 +34,6 @@ There are other higher levels of privacy, such as camouflaging the extension as 
 
 The extension will be available on official stores soon.
 
-## Usage
-
-### Adding a 2FA Account
-
-1. **Click** on the extension icon
-2. **Click "Add"** or "Add account"
-3. **Enter the account name** (e.g., "Google", "GitHub")
-4. **Enter the secret key** (the string that appears in the QR code)
-5. **Click "Add"**
-
-### Getting Codes
-
-1. **Click** on the extension icon
-2. **View** the automatically generated codes
-3. **Click "Copy"** to copy a code to the clipboard
-4. **Codes refresh** automatically every 30 seconds
-
-### Deleting an Account
-
-1. **Click** the "Delete" button next to the account
-2. **Confirm** the deletion in the modal
-
-## Configuration
-
-### Obtaining the Secret Key
-
-When setting up 2FA on a service:
-
-1. **Scan the QR code** with any 2FA app to get the key
-2. **Or look for the option** "Can't scan the QR code" or "Manual setup"
-3. **Copy the secret key** (a string like: `JBSWY3DPEHPK3PXP`)
-4. **Use it in the extension**
-
-### Compatible Services
-
-This extension is compatible with any service that uses TOTP (Time-based One-Time Password):
-
-- Google/Gmail
-- GitHub
-- Microsoft
-- Facebook
-- Twitter/X
-- Discord
-- Dropbox
-- And many more...
-
 ## Security
 
 ![Security](images/security.png)
