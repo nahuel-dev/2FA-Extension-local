@@ -95,7 +95,7 @@ This extension is compatible with any service that uses TOTP (Time-based One-Tim
 ### Project Structure
 
 ```
-mividaextension/
+2FA-Extension-local/
 ├── manifest.json       # Extension configuration
 ├── popup.html         # Main interface
 ├── popup.css          # Styles
